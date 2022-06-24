@@ -6,7 +6,7 @@ from api.models import User, Project, Time
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'email', 'login']
+        fields = ['id', 'username', 'email', 'first_name']
 
 
 class ProjectSerializer(serializers.ModelSerializer):

@@ -3,12 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    login = models.CharField(max_length=150, null=False, blank=False, unique=True)
-    email = models.CharField(max_length=150, null=False, blank=False, default='')
-    name = models.CharField(max_length=150, null=False, blank=False, default='')
+    email = models.CharField('Email', max_length=50)
     projects = models.ManyToManyField('Project')
-
-    USERNAME_FIELD = 'login'
 
 
 class Project(models.Model):

@@ -1,3 +1,5 @@
+from django.contrib.auth.hashers import check_password
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import action
@@ -13,31 +15,37 @@ class UsersViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(methods=['GET'], permission_classes=[IsAuthenticated], detail=False)
+    @action(methods=['POST'], permission_classes=[IsAuthenticated], detail=False)
     def create_user(self, request):
-        login = request.data['login']
         password = request.data['password']
-        name = request.data['name']
+        username = request.data['username']
         email = request.data['email']
 
         try:
-            user = User.objects.create(username=login, password=password, name=name, email=email)
+            user = User.objects.create_user(username=username, password=password, email=email)
             serializer = UserSerializer(user)
             return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({'message': 'Fail to create user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    @action(methods=['GET'], permission_classes=[AllowAny], detail=False)
+    @action(methods=['POST'], permission_classes=[AllowAny], detail=False)
     def authenticate(self, request):
-        login = request.data['login']
+        username = request.data['username']
         password = request.data['password']
 
         try:
-            user = User.objects.get(username=login, password=password)
-            token = Token.objects.get_or_create(user=user)
-            serializer = UserSerializer(user)
-            return Response({'token': token[0].__str__(), 'user': serializer.data}, status=status.HTTP_200_OK)
+            user = User.objects.get(username=username)
+            success = check_password(password, user.password)
+            if success:
+                token = Token.objects.get_or_create(user=user)
+                serializer = UserSerializer(user)
+                return Response({'token': token[0].__str__(), 'user': serializer.data}, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'User or password invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        except ObjectDoesNotExist:
+            return Response({'message': 'User not registered in the system'}, status=status.HTTP_404_NOT_FOUND)
 
         except Exception as e:
             return Response({'message': 'Fail to create user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
