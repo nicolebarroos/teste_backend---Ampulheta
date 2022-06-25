@@ -1,19 +1,19 @@
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.authtoken.models import Token
-from api.models import User
-from api.serializers import UserSerializer
+from api.models import User, Time, Project
+from api.serializers import UserSerializer, TimeSerializer, ProjectSerializer
 
 
 class UsersViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
     @action(methods=['POST'], permission_classes=[IsAuthenticated], detail=False)
     def create_user(self, request):
@@ -51,7 +51,25 @@ class UsersViewSet(ModelViewSet):
             return Response({'message': 'Fail to create user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class TimeViewSet(ModelViewSet):
+    queryset = Time.objects.all()
+    serializer_class = TimeSerializer
+    permission_classes = [IsAuthenticated]
+
+    @action(methods=['GET'], permission_classes=[IsAuthenticated], detail=False)
+    def get_time_by_project(self, request):
+        id_project = request.query_params['id_project']
+        try:
+            times = Time.objects.filter(project_id=id_project)
+            serializer = TimeSerializer(times, many=True)
+            return Response({'times': serializer.data}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'message': 'Fail to get time by project'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
+class ProjectViewSet(ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
 

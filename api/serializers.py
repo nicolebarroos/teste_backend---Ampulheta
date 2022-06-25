@@ -13,6 +13,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+        extra_kwargs = {'times': {'required': False}}
 
 
 class TimeSerializer(serializers.ModelSerializer):
