@@ -1,29 +1,33 @@
+import pytest
+from rest_framework.exceptions import ErrorDetail
+
 from rest_framework.utils import json
 from rest_framework.utils.encoders import JSONEncoder
-import pytest
 
-from api.serializers import UserSerializer
+from api.serializers import ProjectSerializer
 
 
 @pytest.mark.django_db
-def test_valid_user_serializer():
+def test_valid_project_serializer():
     valid_serializer_data = {
-        "email": "administradorgmail.com",
-        "username": "Administrador",
+        "title": "Cardápio digital",
+        "description": "Projeto voltado a criação de cardápios digitais",
     }
-    serializer = UserSerializer(data=valid_serializer_data)
+
+    serializer = ProjectSerializer(data=valid_serializer_data)
     assert serializer.is_valid()
     assert json.loads(json.dumps(serializer.validated_data, cls=JSONEncoder)) == valid_serializer_data
     assert serializer.data == valid_serializer_data
     assert serializer.errors == {}
 
 
-@pytest.mark.django_db
-def test_invalid_user_serializer():
+def test_invalid_projec_serializer():
     invalid_serializer_data = {
-        "email": "administradorgmail.com",
+        "title": "Cardápio digital",
+
     }
-    serializer = UserSerializer(data=invalid_serializer_data)
+
+    serializer = ProjectSerializer(data=invalid_serializer_data)
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
