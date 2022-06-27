@@ -24,7 +24,7 @@ class UsersViewSet(ModelViewSet):
         try:
             user = User.objects.create_user(username=username, password=password, email=email)
             serializer = UserSerializer(user)
-            return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
             return Response({'message': 'Fail to create user'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
