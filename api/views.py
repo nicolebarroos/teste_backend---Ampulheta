@@ -22,6 +22,7 @@ class UsersViewSet(ModelViewSet):
         email = request.data['email']
 
         try:
+
             user = User.objects.create_user(username=username, password=password, email=email)
             serializer = UserSerializer(user)
             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)

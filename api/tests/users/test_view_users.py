@@ -10,7 +10,7 @@ from rest_framework.authtoken.models import Token
 class TestUserAPI(APITestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='Administrador', password='81662527')
+        self.user = User.objects.create_user(username='Administrador', password='81662527', email="administrador@gmail.com")
 
     def test_authentification(self):
         request = self.client.post('http://localhost:8000/api/v1.0/users/authenticate/',
@@ -41,3 +41,20 @@ class TestUserAPI(APITestCase):
 
         movies = User.objects.all()
         assert len(movies) > 0
+
+    @pytest.mark.django_db
+    def test_invalid_add_user(self):
+        token = Token.objects.get_or_create(user=self.user)
+        resp = self.client.post(
+            "/api/v1.0/users/create_user/",
+            json.dumps({
+                "email": "admin1@gmail.com",
+                "username": "admin1",
+                "password": ""
+            }),
+            content_type="application/json",
+            HTTP_AUTHORIZATION='Token {}'.format(token[0].__str__())
+        )
+
+        assert resp.status_code == 500
+
