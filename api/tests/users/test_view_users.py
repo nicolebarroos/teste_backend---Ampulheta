@@ -58,3 +58,46 @@ class TestUserAPI(APITestCase):
 
         assert resp.status_code == 500
 
+    @pytest.mark.django_db
+    def test_list_all_users(self):
+        token = Token.objects.get_or_create(user=self.user)
+        resp = self.client.get(
+            "/api/v1.0/users/",
+            HTTP_AUTHORIZATION='Token {}'.format(token[0].__str__())
+        )
+
+        assert resp.status_code == 200
+        assert resp.data[0]['username'] == "Administrador"
+
+    @pytest.mark.django_db
+    def test_get_user(self):
+        token = Token.objects.get_or_create(user=self.user)
+        resp = self.client.get(
+            "/api/v1.0/users/1/",
+            HTTP_AUTHORIZATION='Token {}'.format(token[0].__str__())
+        )
+
+        assert resp.status_code == 200
+        assert resp.data['username'] == "Administrador"
+
+    @pytest.mark.django_db
+    def test_update_user(self):
+        token = Token.objects.get_or_create(user=self.user)
+        resp = self.client.put(
+            "/api/v1.0/users/1/",
+            json.dumps({
+                "email": "admin@gmail.com",
+                "username": "admin",
+                "password": "81662527"
+            }),
+            content_type="application/json",
+            HTTP_AUTHORIZATION='Token {}'.format(token[0].__str__())
+        )
+
+        assert resp.status_code == 200
+        assert resp.data['username'] == "admin"
+
+        movies = User.objects.all()
+        assert len(movies) > 0
+
+
