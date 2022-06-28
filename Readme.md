@@ -43,3 +43,18 @@ Total: 13 horas e 25 min de desenvolvimento, dividios em 4 dias de trabalho.
 
 
 ##Instalação e configuração do projeto
+Para rodar o container:
+
+> sudo docker-compose -f docker-compose.yml up --build
+
+ou
+
+> docker-compose up -d --build
+
+Para xecutar os testes:
+
+> sudo docker-compose -f docker-compose.yml exec -T api  pytest -s -v --traceconfig 
+
+ou
+
+> docker-compose exec movies pytest
