@@ -24,7 +24,7 @@ Tornei o ambiente isolado, utilizando Docker para conteinerização, facilitando
 
 Os testes automatizados foram desenvolvidos utilizando Pytest, dessa forma, todos os models, serializers e views foram testados.
 
-##Qualidade de código
+## Qualidade de código
 - Para ajustes finais visando qualidade de código, usaria Coverage.py que é uma ferramenta popular para medir a cobertura 
 de código em aplicativos baseados em Python. Já que usei pytest, realizaria a integração do Coverage.py com pytest via pytest-cov.
 
@@ -48,10 +48,10 @@ baseado nas funcionalidades detalhadas no escopo.
 
 Total: 13 horas e 25 min de desenvolvimento, dividios em 5 dias de trabalho.
 
-##Coleção do postman
+## Coleção do postman
 https://www.getpostman.com/collections/b0090cd9351bb086aeeb
 
-##Instalação e configuração do projeto
+## Instalação e configuração do projeto
 Para rodar o container:
 
 > sudo docker-compose -f docker-compose.yml up --build
@@ -60,7 +60,7 @@ ou
 
 > docker-compose up -d --build
 
-Para xecutar os testes:
+Para executar os testes:
 
 > sudo docker-compose -f docker-compose.yml exec -T api  pytest -s -v --traceconfig 
 
