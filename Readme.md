@@ -46,7 +46,7 @@ baseado nas funcionalidades detalhadas no escopo.
 - Criação dos testes dos serializers - *3h*
 - Criação dos testes das views - *4h*
 
-Total: 13 horas e 25 min de desenvolvimento, dividios em 4 dias de trabalho.
+Total: 13 horas e 25 min de desenvolvimento, dividios em 5 dias de trabalho.
 
 ##Coleção do postman
 https://www.getpostman.com/collections/b0090cd9351bb086aeeb
