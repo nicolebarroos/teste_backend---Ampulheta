@@ -6,8 +6,9 @@ configuração do projeto.
 ## Avaliação do escopo
 Baseado no cenário detalhado no escopo, julguei necessário arquitetar um projeto Python/Django/Django Rest, 
 primeiramente contendo modelos representados pelas entidades, usuários, tempos e projetos, onde:
--Usuários teriam projetos;
--Projetos teriam tempos registrados de trabalho;
+
+- Usuários teriam projetos;
+- Projetos teriam tempos registrados de trabalho;
 - Um usuário tem múltiplos projetos;
 - Um projeto tem múltiplos usuários;
 - Um projeto tem múltiplos tempos registrados;
@@ -23,24 +24,32 @@ Tornei o ambiente isolado, utilizando Docker para conteinerização, facilitando
 
 Os testes automatizados foram desenvolvidos utilizando Pytest, dessa forma, todos os models, serializers e views foram testados.
 
+##Qualidade de código
+- Para ajustes finais visando qualidade de código, usaria Coverage.py que é uma ferramenta popular para medir a cobertura 
+de código em aplicativos baseados em Python. Já que usei pytest, realizaria a integração do Coverage.py com pytest via pytest-cov.
+
+- Para verificar em meu código, erros estilísticos ou de programação, usaria a lib Flake8.
+
+Ambos os pontos não foram implementados por conta do tempo. 
+
 ## Estimativa de prazo (horas/dias)
 Para analizar o prazo do desenvovlimento, utilizei o método de *análise de ponto de funções*, isso significa estimar tempo 
 baseado nas funcionalidades detalhadas no escopo. 
 
-Criação do projeto Ampulheta e da API *15min*
-Conteinerização em Docker da aplicação *15min*
-Criação dos modelos e relacionamentos *1h e 30min*
-Criação dos serializers *1h*
-Criação dos endpoints de autenticação, criação de usuário e detalhamento do tempo baseado no id de um projeto *2h*
-Configuração do Pytest *15min*
-Criação dos testes dos modelos *1h*
-Criação dos testes dos serializers *3h*
-Criação dos testes das views *4h*
+- Criação do projeto Ampulheta e da API - *15min*
+- Conteinerização em Docker da aplicação - *15min*
+- Criação dos modelos e relacionamentos - *1h e 30min*
+- Criação dos serializers - *1h*
+- Criação dos endpoints de autenticação, criação de usuário e detalhamento do tempo baseado no id de um projeto - *2h*
+- Configuração do Pytest - *15min*
+- Criação dos testes dos modelos - *1h*
+- Criação dos testes dos serializers - *3h*
+- Criação dos testes das views - *4h*
 
 Total: 13 horas e 25 min de desenvolvimento, dividios em 4 dias de trabalho.
 
 ##Coleção do postman
-
+https://www.getpostman.com/collections/b0090cd9351bb086aeeb
 
 ##Instalação e configuração do projeto
 Para rodar o container:

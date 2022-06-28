@@ -10,4 +10,4 @@ def test_movie_model():
     assert user.email == "administrador@gmail.com"
     assert user.username == "Administrador"
     assert user.password == "81662527"
-    assert str(user) == user.username
+    assert str(user) == user.email

@@ -6,7 +6,7 @@ from api.models import User, Project, Time
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']
+        fields = ('id', 'username', 'email')
 
 
 class TimeSerializer(serializers.ModelSerializer):
@@ -16,9 +16,12 @@ class TimeSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    users = UserSerializer(required=False, many=True)
-    times = TimeSerializer(required=False, many=True)
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'users', 'times']
+        extra_kwargs = {
+            'users': {'required': False},
+            'times': {'required': False},
+        }
+        fields = ('title', 'description', 'users', 'times')
+

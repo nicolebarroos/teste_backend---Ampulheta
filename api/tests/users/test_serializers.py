@@ -27,4 +27,4 @@ def test_invalid_user_serializer():
     assert not serializer.is_valid()
     assert serializer.validated_data == {}
     assert serializer.data == invalid_serializer_data
-    assert serializer.errors == {"description": ["This field is required."]}
+    assert serializer.errors == {"username": ["This field is required."]}

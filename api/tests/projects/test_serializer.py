@@ -11,13 +11,13 @@ from api.serializers import ProjectSerializer
 def test_valid_project_serializer():
     valid_serializer_data = {
         "title": "Cardápio digital",
-        "description": "Projeto voltado a criação de cardápios digitais",
+        "description": "Projeto voltado a criação de cardápios digitais"
+
     }
 
     serializer = ProjectSerializer(data=valid_serializer_data)
     assert serializer.is_valid()
     assert json.loads(json.dumps(serializer.validated_data, cls=JSONEncoder)) == valid_serializer_data
-    assert serializer.data == valid_serializer_data
     assert serializer.errors == {}
 
 
